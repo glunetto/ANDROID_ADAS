@@ -13,7 +13,7 @@ extern "C" {
  * Method:    nativeHOGDetector
  * Signature: (J)V
  */
-JNIEXPORT void JNICALL Java_org_idra_adas_DetectionBasedTracker_nativeHOGDetector(JNIEnv *, jclass, jlong);
+JNIEXPORT void JNICALL Java_org_idra_adas_DetectionBasedTracker_nativeHOGDetector(JNIEnv *, jclass, jlong, jlong);
 
 #ifdef __cplusplus
 }

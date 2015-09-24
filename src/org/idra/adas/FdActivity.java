@@ -5,7 +5,14 @@ import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfRect;
+import org.opencv.core.Point;
+import org.opencv.core.Rect;
+import org.opencv.core.Scalar;
+import org.opencv.core.Size;
+import org.opencv.imgproc.Imgproc;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
 
@@ -20,6 +27,8 @@ public class FdActivity extends Activity implements CvCameraViewListener2
  {
 
 	private static final String TAG = "OCVSample::Activity";
+
+	private static final Scalar FACE_RECT_COLOR = new Scalar(0, 255, 0, 255);
 
 	private Mat mRgba;
 	private Mat mGray;
@@ -123,15 +132,30 @@ public class FdActivity extends Activity implements CvCameraViewListener2
 
 	public Mat onCameraFrame(CvCameraViewFrame inputFrame) 
 	{
+		int sample_ratio = 3;
 
 		mRgba = inputFrame.rgba();
 		mGray = inputFrame.gray();
+		
+        MatOfRect items = new MatOfRect();
 
 		if (mNativeDetector != null)
-		{
-			mNativeDetector.detect(mGray);
+		{	
+			Imgproc.resize(mGray, mGray, new Size(mGray.cols()/sample_ratio, mGray.rows()/sample_ratio));
+			mNativeDetector.detect(mGray, items);
 		}
+		
+		Rect[] itemsArray = items.toArray();
+        for (int i = 0; i < itemsArray.length; i++)
+        {
+			Log.d("TEST", "Found pedestrians: "+itemsArray.length);
+            Imgproc.rectangle(mRgba, new Point(itemsArray[i].tl().x*sample_ratio,itemsArray[i].tl().y*sample_ratio),
+            		new Point(itemsArray[i].br().x*sample_ratio,itemsArray[i].br().y*sample_ratio), FACE_RECT_COLOR, 3);
+        }
 
+        items.release();
+        //mGray.release();
+        
 		return mRgba;
 	}
 

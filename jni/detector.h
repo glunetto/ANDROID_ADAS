@@ -11,10 +11,10 @@
 // 
 /**/
 
-struct Detected
+struct Entity
 {
-  std::vector<cv::Rect> found;
-  std::vector<enum TYPES> id;
+  cv::Rect found;
+  enum TYPES id;
 };
 
 class Detector
@@ -42,31 +42,46 @@ class Detector
     }
 
     /* Other methods, needed in order to elaborate the image */
-    Detected detect (cv::UMat input)
+    std::vector<Entity> detect (cv::UMat input)
     {
-      Detected output;
-      std::vector<cv::Rect> pedestrians, cars, cycles;
-
-      if(_pedestrians) _hog_pedestrians.detectMultiScale(input.getMat(cv::ACCESS_READ), pedestrians, 1.4, cv::Size(8, 8), cv::Size(0, 0), 1.05, 8);
-      for( size_t i = 0; i < pedestrians.size(); i++)
+      std::vector<Entity> output;
+      if(!input.empty())
       {
-        output.id.push_back(PEDESTRIAN);
-        output.found.push_back(pedestrians.at(i));
+          std::vector<cv::Rect> detected;
+
+		  if(_pedestrians) _hog_pedestrians.detectMultiScale(input.getMat(cv::ACCESS_READ), detected, 1.4, cv::Size(8, 8), cv::Size(0, 0), 1.05, 8);
+		  for( int i = 0; i < detected.size(); i++)
+		  {
+			  Entity temp;
+			  temp.found = detected[i];
+			  temp.id = PEDESTRIAN;
+			  output.push_back(temp);
+		  }
+
+		  detected.clear();
+
+		  /*if(_cycles) _hog_cycles.detectMultiScale(input.getMat(cv::ACCESS_READ), detected, 1.4, cv::Size(8, 8), cv::Size(0, 0), 1.05, 8);
+		  for( int i = 0; i < detected.size(); i++)
+		  {
+			  Entity temp;
+			  temp.found = detected[i];
+			  temp.id = CYCLE;
+			  output.push_back(temp);
+		  }
+
+		  if(_cars) _hog_cars.detectMultiScale(input.getMat(cv::ACCESS_READ), detected, 1.4, cv::Size(8, 8), cv::Size(0, 0), 1.05, 8);
+		  for( int i = 0; i < detected.size(); i++)
+		  {
+			  Entity temp;
+			  temp.found = detected[i];
+			  temp.id = CAR;
+			  output.push_back(temp);
+		  }*/
       }
-
-      /*if(_cycles) _hog_cycles.detectMultiScale(input.getMat(cv::ACCESS_READ), cycles, 1.4, cv::Size(8, 8), cv::Size(0, 0), 1.05, 8);
-      for( size_t i = 0; i < cycles.size(); i++)
+      else
       {
-        output.id.push_back(CYCLE);
-        output.found.push_back(cycles.at(i));
+    	  std::cerr << "Empty image!";
       }
-
-      if(_cars) _hog_cars.detectMultiScale(input.getMat(cv::ACCESS_READ), cars, 1.4, cv::Size(8, 8), cv::Size(0, 0), 1.05, 8);
-      for( size_t i = 0; i < cars.size(); i++)
-      {
-        output.id.push_back(CAR);
-        output.found.push_back(cars.at(i));
-      }*/
 
       return output;
     }
