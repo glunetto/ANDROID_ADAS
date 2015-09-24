@@ -26,6 +26,7 @@ public class FdActivity extends Activity implements CvCameraViewListener2
  {
 
 	private static final String TAG = "OCVSample::Activity";
+	private static final int sample_ratio = 3;
 
 	private static final Scalar FACE_RECT_COLOR = new Scalar(0, 255, 0, 255);
 
@@ -99,10 +100,8 @@ public class FdActivity extends Activity implements CvCameraViewListener2
 		super.onResume();
 		if (!OpenCVLoader.initDebug()) 
 		{
-			Log.d(TAG,
-					"Internal OpenCV library not found. Using OpenCV Manager for initialization");
-			OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_0_0, this,
-					mLoaderCallback);
+			Log.d(TAG, "Internal OpenCV library not found. Using OpenCV Manager for initialization");
+			OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_0_0, this, mLoaderCallback);
 		} 
 		else 
 		{
@@ -131,12 +130,10 @@ public class FdActivity extends Activity implements CvCameraViewListener2
 
 	public Mat onCameraFrame(CvCameraViewFrame inputFrame) 
 	{
-		int sample_ratio = 3;
-
 		mRgba = inputFrame.rgba();
 		mGray = inputFrame.gray();
-		
-        MatOfRect items = new MatOfRect();
+
+		MatOfRect items = new MatOfRect();
 
 		if (mNativeDetector != null)
 		{	
@@ -148,12 +145,11 @@ public class FdActivity extends Activity implements CvCameraViewListener2
         for (int i = 0; i < itemsArray.length; i++)
         {
 			Log.d("TEST", "Found pedestrians: "+itemsArray.length);
-            Imgproc.rectangle(mRgba, new Point(itemsArray[i].tl().x*sample_ratio,itemsArray[i].tl().y*sample_ratio),
-            		new Point(itemsArray[i].br().x*sample_ratio,itemsArray[i].br().y*sample_ratio), FACE_RECT_COLOR, 3);
+            Imgproc.rectangle(mRgba, new Point(itemsArray[i].tl().x*sample_ratio, itemsArray[i].tl().y*sample_ratio),
+            		new Point(itemsArray[i].br().x*sample_ratio, itemsArray[i].br().y*sample_ratio), FACE_RECT_COLOR, 3);
         }
 
         items.release();
-        //mGray.release();
         
 		return mRgba;
 	}
