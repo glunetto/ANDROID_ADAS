@@ -3,9 +3,10 @@
  * 		-Implementare un controllo del movimento 							( priorità: 2 )
  * 		-Implementare un sistema per capire se esiste un pericolo o meno 	( priorità: 1 )
  * 		-Inserire un menù di "impostazioni"									( priorità: 0 )
- * 		-Utilizzare l'audio di John Cena									( priorità: MAX )
+ * 		-UTILIZZARE L'AUDIO DI JOHN CENA!!!									( priorità: MAX )
  * 		-Inserire gli avvertimenti audio nei posti giusti					( priorità: 1 )
  * 		-Migliorare la velocità di esecuzione								( priorità: 1 )
+ * 		-Collegare OSM per capire se possono esserci "COSE"					( priorità: 2 )
  * 
  ********/
 package org.idra.adas;
@@ -182,6 +183,7 @@ public class FdActivity extends Activity implements CvCameraViewListener2
 	// praticamente iol main di questa app (CAMBIATE ANCHE QUESTO COMMENTO PER FAVORE)
 	public Mat onCameraFrame(CvCameraViewFrame inputFrame) 
 	{
+		
 		mRgba = inputFrame.rgba();
 		mGray = inputFrame.gray();
 

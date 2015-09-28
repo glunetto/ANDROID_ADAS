@@ -48,7 +48,6 @@ public class AudioManager implements TextToSpeech.OnInitListener, Runnable
 	public void onInit(int status) 
 	{
 		tts_ready = true;
-		//this.speech ("Ciao");
 	}
 
 	@Override
