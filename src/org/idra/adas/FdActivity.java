@@ -1,6 +1,7 @@
 package org.idra.adas;
 
 import org.idra.adas.DetectionBasedTracker;
+import org.idra.adas.audio.AudioManager;
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
 import org.opencv.android.LoaderCallbackInterface;
@@ -16,13 +17,14 @@ import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
 
 import android.app.Activity;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 
-public class FdActivity extends Activity implements CvCameraViewListener2 
+public class FdActivity extends Activity implements CvCameraViewListener2
  {
 
 	private static final String TAG = "OCVSample::Activity";
@@ -32,6 +34,9 @@ public class FdActivity extends Activity implements CvCameraViewListener2
 
 	private Mat mRgba;
 	private Mat mGray;
+	
+	private AudioManager ADAS_Audio;
+	
 	
 	private DetectionBasedTracker mNativeDetector;
 
@@ -82,6 +87,11 @@ public class FdActivity extends Activity implements CvCameraViewListener2
 
 		mOpenCvCameraView = (CameraBridgeViewBase) findViewById(R.id.fd_activity_surface_view);
 		mOpenCvCameraView.setCvCameraViewListener(this);
+		
+		ADAS_Audio = new AudioManager(this.getApplicationContext());
+		Thread my_thread = new Thread (ADAS_Audio);
+		my_thread.start();
+		
 	}
 
 	@Override
@@ -98,6 +108,7 @@ public class FdActivity extends Activity implements CvCameraViewListener2
 	public void onResume() 
 	{
 		super.onResume();
+		
 		if (!OpenCVLoader.initDebug()) 
 		{
 			Log.d(TAG, "Internal OpenCV library not found. Using OpenCV Manager for initialization");

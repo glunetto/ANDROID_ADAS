@@ -6,7 +6,12 @@ int id back 0x7f060001
 int id fd_activity_surface_view 0x7f060003
 int id front 0x7f060002
 int layout face_detect_surface_view 0x7f030000
-int raw lbpcascade_frontalface 0x7f040000
+int raw auto_pilot_disabled 0x7f040000
+int raw auto_pilot_engaged 0x7f040001
+int raw connecting 0x7f040002
+int raw john_cena 0x7f040003
+int raw lbpcascade_frontalface 0x7f040004
+int raw ward_drive_active 0x7f040005
 int string app_name 0x7f050000
 int[] styleable CameraBridgeViewBase { 0x7f010000, 0x7f010001 }
 int styleable CameraBridgeViewBase_camera_id 1

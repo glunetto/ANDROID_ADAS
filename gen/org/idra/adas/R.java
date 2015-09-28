@@ -49,7 +49,12 @@ containing a value of this type.
         public static final int face_detect_surface_view=0x7f030000;
     }
     public static final class raw {
-        public static final int lbpcascade_frontalface=0x7f040000;
+        public static final int auto_pilot_disabled=0x7f040000;
+        public static final int auto_pilot_engaged=0x7f040001;
+        public static final int connecting=0x7f040002;
+        public static final int john_cena=0x7f040003;
+        public static final int lbpcascade_frontalface=0x7f040004;
+        public static final int ward_drive_active=0x7f040005;
     }
     public static final class string {
         public static final int app_name=0x7f050000;
