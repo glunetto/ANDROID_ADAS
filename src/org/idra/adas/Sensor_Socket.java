@@ -51,8 +51,8 @@ public class Sensor_Socket implements ConnectionCallbacks, OnConnectionFailedLis
     	float acc[] = { _acc_x, _acc_y, _acc_z };
     	return acc;
     }
-
-    public void create_socket(Context application__context)
+   
+    public Sensor_Socket(Context application__context)
     {
     	_context = application__context;
 		if (checkPlayServices()) 

@@ -3,18 +3,13 @@ package org.idra.adas.audio;
 import java.util.ArrayList;
 
 import java.util.List;
-import java.util.Locale;
 
-import android.R;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.speech.tts.TextToSpeech;
-import android.util.Log;
 
 public class AudioManager implements TextToSpeech.OnInitListener, Runnable
-{
-	private static final String TAG = "AudioManager";
-	
+{	
 	private Context context;
 	private MediaPlayer mp;
 	

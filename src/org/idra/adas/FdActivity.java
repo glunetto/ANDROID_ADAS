@@ -2,6 +2,7 @@ package org.idra.adas;
 
 import org.idra.adas.DetectionBasedTracker;
 import org.idra.adas.audio.AudioManager;
+import org.idra.adas.utm.Utm;
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
 import org.opencv.android.LoaderCallbackInterface;
@@ -17,7 +18,6 @@ import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
 
 import android.app.Activity;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -112,6 +112,9 @@ public class FdActivity extends Activity implements CvCameraViewListener2
 	public void onStart()
 	{
 		ADAS_Sensors.start_socket();
+		double loc[] = { 0, 0 };
+		loc = Utm.UTM( -2.157205, 23.071289);
+		Log.d("qualcosa", "x: " + loc[0] + " y: " + loc[1]);
 	}
 	
 	@Override
