@@ -36,6 +36,7 @@ public class FdActivity extends Activity implements CvCameraViewListener2
 	private Mat mGray;
 	
 	private AudioManager ADAS_Audio;
+	private Sensor_Socket ADAS_Sensors;
 	
 	
 	private DetectionBasedTracker mNativeDetector;
@@ -92,6 +93,7 @@ public class FdActivity extends Activity implements CvCameraViewListener2
 		Thread my_thread = new Thread (ADAS_Audio);
 		my_thread.start();
 		
+		ADAS_Sensors = new Sensor_Socket(this.getApplicationContext());
 	}
 
 	@Override
@@ -102,6 +104,20 @@ public class FdActivity extends Activity implements CvCameraViewListener2
 		{
 			mOpenCvCameraView.disableView();
 		}
+		
+		ADAS_Sensors.pause_socket();
+	}
+	
+	@Override
+	public void onStart()
+	{
+		ADAS_Sensors.start_socket();
+	}
+	
+	@Override
+	public void onStop()
+	{
+		ADAS_Sensors.stop_socket();
 	}
 
 	@Override
@@ -119,6 +135,7 @@ public class FdActivity extends Activity implements CvCameraViewListener2
 			Log.d(TAG, "OpenCV library found inside package. Using it!");
 			mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
 		}
+		ADAS_Sensors.resume_socket();
 	}
 
 	public void onDestroy() 
