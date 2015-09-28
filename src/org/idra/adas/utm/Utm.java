@@ -3,13 +3,9 @@ package org.idra.adas.utm;
 public class Utm
 {
 	private final static double RADIANS_PER_DEGREE = Math.PI/180.0;
-	private final static double grid_size = 100000.0;    			// 100 km grid
 	
 	private final static double WGS84_A = 6378137.0; 				//major axis
-	private final static double WGS84_B = 6356752.31424518 ;		//minor axis
-	private final static double WGS84_F	= 0.0033528107;				// ellipsoid flattening
 	private final static double WGS84_E	= 0.0818191908;				// first eccentricity
-	private final static double WGS84_EP = 0.0820944379;			// second eccentricity
 	
 	private final static double UTM_K0 = 0.9996;					// scale factor
 	private final static double UTM_FE = 500000.0;					// false easting
